@@ -1,0 +1,43 @@
+---
+- name: k8s_pre-requisite-part1
+  hosts: localhost
+  connection: local
+  gather_facts: no
+  become: yes
+  become_method: sudo
+  user: parthik
+  tasks:
+    - name: converting j2 into yaml
+      template:
+        src: roles/pre-requisite/tasks/main.yaml.j2
+        dest: roles/pre-requisite/tasks/main.yaml
+
+- name: k8s_pre-requisite-part2
+  hosts: localhost
+  connection: local
+  gather_facts: no
+  become: yes
+  become_method: sudo
+  user: parthik
+  roles:
+    - pre-requisite
+
+- name: k8s_installation_master
+  hosts: master
+  connection: ssh
+  gather_facts: no
+  become: yes
+  become_method: sudo
+  user: parthik
+  roles:
+    - installing_k8s_master
+
+- name: k8s_installation_worker
+  hosts: worker
+  connection: ssh
+  gather_facts: no
+  become: yes
+  become_method: sudo
+  user: parthik
+  roles:
+    - installing_k8s_worker

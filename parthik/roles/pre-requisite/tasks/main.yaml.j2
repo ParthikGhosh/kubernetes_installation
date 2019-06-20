@@ -1,0 +1,17 @@
+---
+- name: creating rsa key
+  openssh_keypair:
+    path: /root/.ssh/id_rsa
+    force: True
+
+{% for host in groups['master'] %}
+- name: copying keygen to master nodes
+  command: sshpass -f /root/parthik/inventory/password.txt ssh-copy-id parthik@{{ host }}
+
+{% endfor %}
+
+{% for host in groups['worker'] %}
+- name: copying keygen to worker nodes
+  command: sshpass -f /root/parthik/inventory/password.txt ssh-copy-id parthik@{{ host }}
+
+{% endfor %}

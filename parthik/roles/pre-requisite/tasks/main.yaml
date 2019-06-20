@@ -1,0 +1,16 @@
+---
+- name: creating rsa key
+  openssh_keypair:
+    path: /root/.ssh/id_rsa
+    force: True
+
+- name: copying keygen to master nodes
+  command: sshpass -f /root/parthik/inventory/password.txt ssh-copy-id parthik@13.72.67.22
+
+
+- name: copying keygen to worker nodes
+  command: sshpass -f /root/parthik/inventory/password.txt ssh-copy-id parthik@13.90.57.110
+
+- name: copying keygen to worker nodes
+  command: sshpass -f /root/parthik/inventory/password.txt ssh-copy-id parthik@13.72.67.116
+

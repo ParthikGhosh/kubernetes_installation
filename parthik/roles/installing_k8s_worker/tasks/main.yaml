@@ -1,0 +1,37 @@
+---
+- name: yum update
+  apt:
+    name: '*'
+    state: latest
+
+- name: installing docker
+  apt:
+    name: docker.io
+    state: latest
+
+- name: downloading keys
+  shell: curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add
+
+- name: adding k8s to repo
+  shell: apt-add-repository "deb http://apt.kubernetes.io/ kubernetes-xenial main"
+
+- name: installing kubeadm
+  apt:
+    name: kubeadm
+    state: latest
+
+- name: swappoff
+  shell: swapoff -a
+
+- name:
+  debug:
+    msg: "[Worker] K8S_TOKEN_HOLDER K8S token is {{ hostvars['K8S_TOKEN_HOLDER']['token'] }}"
+
+- name:
+  debug:
+    msg: "[Worker] K8S_TOKEN_HOLDER K8S Hash is  {{ hostvars['K8S_TOKEN_HOLDER']['hash'] }}"
+
+- name: "Kubeadmn join"
+  shell: >
+    kubeadm join 10.1.0.6:6443 --token={{ hostvars['K8S_TOKEN_HOLDER']['token'] }}
+    --discovery-token-ca-cert-hash sha256:{{ hostvars['K8S_TOKEN_HOLDER']['hash'] }}
