@@ -6,12 +6,19 @@
 
 {% for host in groups['master'] %}
 - name: copying keygen to master nodes
-  command: sshpass -f /root/parthik/inventory/password.txt ssh-copy-id parthik@{{ host }}
+  command: sshpass -f {{ playbook_dir }}/inventory/password.txt ssh-copy-id parthik@{{ host }} -o StrictHostKeyChecking=no
 
 {% endfor %}
 
+{% for host in groups['ha-master'] %}
+- name: copying keygen to ha-master nodes
+  command: sshpass -f {{ playbook_dir }}/inventory/password.txt ssh-copy-id parthik@{{ host }} -o StrictHostKeyChecking=no
+
+{% endfor %}
+
+
 {% for host in groups['worker'] %}
 - name: copying keygen to worker nodes
-  command: sshpass -f /root/parthik/inventory/password.txt ssh-copy-id parthik@{{ host }}
+  command: sshpass -f {{ playbook_dir }}/inventory/password.txt ssh-copy-id parthik@{{ host }} -o StrictHostKeyChecking=no
 
 {% endfor %}

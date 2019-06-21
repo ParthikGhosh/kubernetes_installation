@@ -18,7 +18,6 @@
   gather_facts: no
   become: yes
   become_method: sudo
-  user: parthik
   roles:
     - pre-requisite
 
@@ -31,6 +30,16 @@
   user: parthik
   roles:
     - installing_k8s_master
+
+- name: k8s_installation_ha_master
+  hosts: ha-master
+  connection: ssh
+  gather_facts: no
+  become: yes
+  become_method: sudo
+  user: parthik
+  roles:
+    - installing_k8s_ha_master
 
 - name: k8s_installation_worker
   hosts: worker

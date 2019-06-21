@@ -5,12 +5,14 @@
     force: True
 
 - name: copying keygen to master nodes
-  command: sshpass -f /root/parthik/inventory/password.txt ssh-copy-id parthik@13.72.67.22
+  command: sshpass -f /root/parthik/inventory/password.txt ssh-copy-id parthik@137.135.65.95 -o StrictHostKeyChecking=no
+
+
+- name: copying keygen to ha-master nodes
+  command: sshpass -f /root/parthik/inventory/password.txt ssh-copy-id parthik@40.121.33.137 -o StrictHostKeyChecking=no
+
 
 
 - name: copying keygen to worker nodes
-  command: sshpass -f /root/parthik/inventory/password.txt ssh-copy-id parthik@13.90.57.110
-
-- name: copying keygen to worker nodes
-  command: sshpass -f /root/parthik/inventory/password.txt ssh-copy-id parthik@13.72.67.116
+  command: sshpass -f /root/parthik/inventory/password.txt ssh-copy-id parthik@23.101.132.112 -o StrictHostKeyChecking=no
 
