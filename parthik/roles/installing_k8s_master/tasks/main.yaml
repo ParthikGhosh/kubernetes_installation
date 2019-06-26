@@ -9,6 +9,9 @@
     name: docker.io
     state: latest
 
+- name: enabling docker
+  shell: systemctl enable docker
+
 - name: downloading keys
   shell: curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add
 

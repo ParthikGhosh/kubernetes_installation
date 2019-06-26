@@ -9,6 +9,9 @@
     name: docker.io
     state: latest
 
+- name: enabling docker
+  shell: systemctl enable docker
+
 - name: downloading keys
   shell: curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add
 
@@ -37,6 +40,6 @@
 
 - name: "Kubeadmn join"
   shell: >
-    kubeadm join 10.1.0.6:6443 --token={{ hostvars['K8S_TOKEN_HOLDER']['token'] }}
+    kubeadm join 10.1.0.6:6443 --token {{ hostvars['K8S_TOKEN_HOLDER']['token'] }}
     --discovery-token-ca-cert-hash sha256:{{ hostvars['K8S_TOKEN_HOLDER']['hash'] }}
-    --control-plane --certificate-key={{ hostvars['K8S_TOKEN_HOLDER']['key'] }}
+    --control-plane --certificate-key {{ hostvars['K8S_TOKEN_HOLDER']['key'] }}
