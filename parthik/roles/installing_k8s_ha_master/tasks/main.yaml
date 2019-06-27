@@ -38,8 +38,12 @@
   debug:
     msg: "[Worker] K8S_TOKEN_HOLDER K8S Key is  {{ hostvars['K8S_TOKEN_HOLDER']['key'] }}"
 
+- name:
+  debug:
+    msg: "[Master] K8S_TOKEN_HOLDER K8S Key is  {{ hostvars['K8S_TOKEN_HOLDER']['pvtip'] }}"
+
 - name: "Kubeadmn join"
   shell: >
-    kubeadm join 10.1.0.6:6443 --token {{ hostvars['K8S_TOKEN_HOLDER']['token'] }}
+    kubeadm join {{ hostvars['K8S_TOKEN_HOLDER']['pvtip'] }}:6443 --token {{ hostvars['K8S_TOKEN_HOLDER']['token'] }}
     --discovery-token-ca-cert-hash sha256:{{ hostvars['K8S_TOKEN_HOLDER']['hash'] }}
     --control-plane --certificate-key {{ hostvars['K8S_TOKEN_HOLDER']['key'] }}
